@@ -15,12 +15,12 @@ class Todo(db.Model):
     complete = db.Column(db.Boolean)
 
 
-@app.route('/')
+@app.route('/') #routing concept
 def home():
     todo_list = Todo.query.all()
     return render_template("base.html",  todo_list=todo_list)
 
-@app.route("/add", methods=["POST"])
+@app.route("/add", methods=["POST"]) #routing concept
 def add():
     title = request.form.get("title")
     new_todo = Todo(title=title, complete=False)
@@ -28,14 +28,14 @@ def add():
     db.session.commit()
     return redirect(url_for("home"))
 
-@app.route("/update/<int:todo_id>")
+@app.route("/update/<int:todo_id>") #routing concept
 def update(todo_id):
     todo = Todo.query.filter_by(id=todo_id).first()
     todo.complete = not todo.complete
     db.session.commit()
     return redirect(url_for("home"))
 
-@app.route("/delete/<int:todo_id>")
+@app.route("/delete/<int:todo_id>") #routing concept
 def delete(todo_id):
     todo = Todo.query.filter_by(id=todo_id).first()
     db.session.delete(todo)
